@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+
 import './App.css';
+import data from "./data";
+import List from "./List"
+import {useState} from 'react';
+
 
 function App() {
+  const[people, setPeople]=useState(data)
+  const reloadAll=()=>{
+    setPeople(data)
+  }
+
+  const removeItem = (id) => {
+    setPeople((oldValue) => oldValue.filter((value) => value.id !== id));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+<h1>Appuntamento per problemi</h1>
+      <List data={people} removeItem={removeItem}/>
+<button className="card__btn" onClick={reloadAll}>Ricarica appuntamenti</button>
+<button className="card__btn_del" onClick={()=>setPeople([])}>Elimina tutto</button>
+
     </div>
   );
 }
